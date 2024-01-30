@@ -18,6 +18,36 @@ import java.util.Calendar
 
 class Booking : AppCompatActivity() {
 
+
+    // 시간 버튼
+    private var selectedTime: String? = null
+
+    // 각 버튼 클릭 시 호출되는 함수
+    private fun onTimeButtonClick(button: Button) {
+        // 선택된 버튼의 텍스트(시간)를 가져와서 저장
+        selectedTime = button.text.toString()
+        // 버튼의 변수명으로 오전, 오후 판별
+        val isAM = button.id.toString().contains("am", ignoreCase = true)
+        val isPM = button.id.toString().contains("pm", ignoreCase = true)
+    }
+    private fun onButtonClick(button: Button) {
+        // 클릭된 버튼에 대한 스타일 적용
+        setButtonStyle(button, clickedStyle)
+    }
+
+    // 버튼에 스타일 적용하는 함수
+    private fun setButtonStyle(button: Button, style: GradientDrawable) {
+        button.background = style
+    }
+
+    // 토스트 메시지를 표시하는 함수
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+
+
+
     companion object {
         const val DIALOG_DATE = 1
     }
@@ -89,8 +119,28 @@ class Booking : AppCompatActivity() {
         btn9pm.setOnClickListener { onButtonClick(btn9pm) }
         btn10pm.setOnClickListener { onButtonClick(btn10pm) }
 
+
+        // 날짜
+        val dateLine = findViewById<EditText>(R.id.dateLine)
+        dateLine.setOnClickListener {
+            showDialog(DIALOG_DATE)
+        }
+
         // 예약하기 버튼에 클릭 리스너 등록
         btnBook2.setOnClickListener {
+
+
+            // SharedPreferences 객체 생성
+            val sharedPreferences = getSharedPreferences("booking_info", MODE_PRIVATE)
+            val editor = sharedPreferences.edit()
+
+            // 예약 정보 저장 (예시로 날짜와 시간을 저장)
+            editor.putString("selectedDate", dateLine.text.toString())
+            editor.putString("selectedTime", selectedTime)
+
+            // 변경사항 저장
+            editor.apply()
+
             // 토스트 메시지 표시
             showToast("예약이 완료되었습니다.")
 
@@ -118,16 +168,16 @@ class Booking : AppCompatActivity() {
     // 캘린더 날짜 설정
     override fun onCreateDialog(id: Int): Dialog {
 
-        // Date
-        val dateLine = findViewById<EditText>(R.id.dateLine)
-        dateLine.setOnClickListener {
-            showDialog(DIALOG_DATE)
-        }
 
         val calendar = Calendar.getInstance()
 
         return when (id) {
             DIALOG_DATE -> {
+                // Date
+                val dateLine = findViewById<EditText>(R.id.dateLine)
+                dateLine.setOnClickListener {
+                    showDialog(DIALOG_DATE)
+                }
                 val datePickerDialog = DatePickerDialog(
                     this,
                     DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
@@ -146,26 +196,8 @@ class Booking : AppCompatActivity() {
 
                 datePickerDialog
             }
-
             else -> super.onCreateDialog(id)
         }
     }
-
-
-    // 각 버튼 클릭 시 호출되는 함수
-    private fun onButtonClick(button: Button) {
-        // 클릭된 버튼에 대한 스타일 적용
-        setButtonStyle(button, clickedStyle)
-    }
-
-    // 버튼에 스타일 적용하는 함수
-    private fun setButtonStyle(button: Button, style: GradientDrawable) {
-        button.background = style
-    }
-
-    // 토스트 메시지를 표시하는 함수
-    private fun showToast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-    }
-
 }
+
