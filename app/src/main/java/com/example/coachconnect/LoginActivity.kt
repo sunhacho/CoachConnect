@@ -2,6 +2,7 @@ package com.example.coachconnect
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.Button
@@ -73,6 +74,11 @@ class LoginActivity : AppCompatActivity() {
             val loginMessageTextView: TextView = findViewById(R.id.loginMessageTextView)
             loginMessageTextView.text = "로그인 정보가 일치하지 않습니다."
             loginMessageTextView.visibility = View.VISIBLE
+
+            // 5초 후에 실패 메시지를 숨김
+            Handler().postDelayed({
+                loginMessageTextView.visibility = View.GONE
+            }, 5000)
         }
     }
 }
