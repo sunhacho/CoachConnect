@@ -10,6 +10,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val searchImageView: ImageView = findViewById(R.id.search_ic)
+
+        searchImageView.setOnClickListener {
+            it.animate().scaleX(0.9f).scaleY(0.9f).setDuration(100).withEndAction {
+                val intent = Intent(this, TrainerInfo::class.java)
+                startActivity(intent)
+
+                it.animate().scaleX(1f).scaleY(1f).setDuration(100).start()
+            }
+        }
         val goalsetting = findViewById<ImageView>(R.id.happy_ic)
         goalsetting.setOnClickListener{
             val intent = Intent(this, GoalsettingActivity::class.java)
