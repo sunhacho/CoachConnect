@@ -38,8 +38,7 @@ class MainActivity : AppCompatActivity() {
 
         if (selectedDate.isNullOrBlank() || selectedTime.isNullOrBlank()) {
             // 예약 정보가 없는 경우
-            bkInfo1.text = "예약되어있는 운동이 없습니다"
-            bkInfo1.visibility = View.VISIBLE
+            bkInfo1.visibility = View.GONE
             boxIc.visibility = View.VISIBLE
             boxIc2.visibility = View.GONE
         } else {
@@ -57,13 +56,32 @@ class MainActivity : AppCompatActivity() {
 
         // 하단 바 클릭 시
 
+        search_ic.setOnClickListener {
+            // 효과 (아이콘 축소)
+            it.animate().scaleX(0.8f).scaleY(0.8f).setDuration(100).withEndAction {
+                val intent = Intent(this, TrainerList::class.java)
+                startActivity(intent)
+                // 효과 제거 (아이콘 확대)
+                it.animate().scaleX(1f).scaleY(1f).setDuration(100).start()
+            }
+        }
         happy_ic.setOnClickListener {
-            val intent = Intent(this, GoalsettingActivity::class.java)
-            startActivity(intent)
+            // 효과 (아이콘 축소)
+            it.animate().scaleX(0.8f).scaleY(0.8f).setDuration(100).withEndAction {
+                val intent = Intent(this, GoalsettingActivity::class.java)
+                startActivity(intent)
+                // 효과 제거 (아이콘 확대)
+                it.animate().scaleX(1f).scaleY(1f).setDuration(100).start()
+            }.start()
         }
         profile_ic.setOnClickListener {
+            // 효과 (아이콘 축소)
+            it.animate().scaleX(0.8f).scaleY(0.8f).setDuration(100).withEndAction {
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
+                // 효과 제거 (아이콘 확대)
+                it.animate().scaleX(1f).scaleY(1f).setDuration(100).start()
+            }.start()
         }
     }
 }

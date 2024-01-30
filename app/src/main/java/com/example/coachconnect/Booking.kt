@@ -151,17 +151,42 @@ class Booking : AppCompatActivity() {
 
 
         // 하단 바 클릭 시
+
         home_ic3.setOnClickListener {
+            // 효과 (아이콘 축소)
+            it.animate().scaleX(0.8f).scaleY(0.8f).setDuration(100).withEndAction {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
+                // 효과 제거 (아이콘 확대)
+                it.animate().scaleX(1f).scaleY(1f).setDuration(100).start()
+            }.start()
+        }
+        search_ic3.setOnClickListener {
+            // 효과 (아이콘 축소)
+            it.animate().scaleX(0.8f).scaleY(0.8f).setDuration(100).withEndAction {
+                val intent = Intent(this, TrainerList::class.java)
+                startActivity(intent)
+                // 효과 제거 (아이콘 확대)
+                it.animate().scaleX(1f).scaleY(1f).setDuration(100).start()
+            }
         }
         happy_ic3.setOnClickListener {
+            // 효과 (아이콘 축소)
+            it.animate().scaleX(0.8f).scaleY(0.8f).setDuration(100).withEndAction {
             val intent = Intent(this, GoalsettingActivity::class.java)
             startActivity(intent)
+                // 효과 제거 (아이콘 확대)
+                it.animate().scaleX(1f).scaleY(1f).setDuration(100).start()
+            }.start()
         }
         profile_ic3.setOnClickListener {
+            // 효과 (아이콘 축소)
+            it.animate().scaleX(0.8f).scaleY(0.8f).setDuration(100).withEndAction {
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
+            // 효과 제거 (아이콘 확대)
+            it.animate().scaleX(1f).scaleY(1f).setDuration(100).start()
+        }.start()
         }
     }
 
