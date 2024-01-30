@@ -1,5 +1,6 @@
 package com.example.coachconnect
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,6 +12,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContentProviderCompat.requireContext
+import com.example.coachconnect.databinding.ActivityProfileBinding
 
 class GoalsettingActivity : AppCompatActivity() {
 
@@ -52,3 +54,4 @@ class GoalsettingActivity : AppCompatActivity() {
         }
     }
 }
+
