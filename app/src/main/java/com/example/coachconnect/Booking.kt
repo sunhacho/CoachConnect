@@ -70,6 +70,8 @@ class Booking : AppCompatActivity() {
         setContentView(R.layout.booking) // 여기에 레이아웃 파일 이름을 넣어야 합니다.
 
         var dateLine = findViewById(R.id.dateLine)
+
+
         recyclerView = findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
