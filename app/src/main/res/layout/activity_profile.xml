@@ -32,7 +32,7 @@
                 android:id="@+id/box"
                 android:layout_width="415dp"
                 android:layout_height="102dp"
-                android:layout_marginTop="630dp"
+                android:layout_marginTop="572dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

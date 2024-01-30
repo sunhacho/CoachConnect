@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -14,7 +15,7 @@
             android:id="@+id/box"
             android:layout_width="415dp"
             android:layout_height="102dp"
-            android:layout_marginTop="630dp"
+            android:layout_marginTop="572dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -107,12 +108,15 @@
         android:background="@drawable/rounded_button" />
 
 
+
+
     <ScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="160dp"
         android:layout_marginBottom="58dp">
+
 
         <!-- 전체 레이아웃을 감싸는 LinearLayout -->
         <LinearLayout

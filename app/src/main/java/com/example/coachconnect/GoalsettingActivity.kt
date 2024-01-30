@@ -18,7 +18,17 @@ class GoalsettingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_goalsetting)
 
+        val searchImageView: ImageView = findViewById(R.id.search_ic)
+
         // 이미지 버튼 클릭시 해당 액티비티 전환
+        searchImageView.setOnClickListener {
+            it.animate().scaleX(0.9f).scaleY(0.9f).setDuration(100).withEndAction {
+                val intent = Intent(this, TrainerInfo::class.java)
+                startActivity(intent)
+
+                it.animate().scaleX(1f).scaleY(1f).setDuration(100).start()
+            }
+        }
         val goalsetting = findViewById<ImageView>(R.id.happy_ic)
         goalsetting.setOnClickListener{
             val intent = Intent(this, GoalsettingActivity::class.java)
@@ -28,6 +38,11 @@ class GoalsettingActivity : AppCompatActivity() {
         val profile = findViewById<ImageView>(R.id.profile_ic)
         profile.setOnClickListener{
             val intent = Intent(this, ProfileActivity::class.java)
+            startActivity(intent)
+        }
+        val home = findViewById<ImageView>(R.id.home_ic)
+        home.setOnClickListener{
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
 
