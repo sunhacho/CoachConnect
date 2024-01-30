@@ -179,7 +179,7 @@
         android:layout_width="55dp"
         android:layout_height="21dp"
         android:layout_marginStart="10dp"
-        android:layout_marginBottom="208dp"
+        android:layout_marginBottom="195dp"
         android:background="@drawable/rounded_btn3"
         android:text="6:00"
         android:textSize="11sp"
@@ -193,7 +193,7 @@
         android:layout_width="55dp"
         android:layout_height="21dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="208dp"
+        android:layout_marginBottom="195dp"
         android:background="@drawable/rounded_btn3"
         android:text="7:00"
         android:textSize="11sp"
@@ -207,7 +207,7 @@
         android:layout_width="55dp"
         android:layout_height="21dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="208dp"
+        android:layout_marginBottom="195dp"
         android:background="@drawable/rounded_btn3"
         android:text="8:00"
         android:textSize="11sp"
@@ -222,7 +222,7 @@
         android:layout_width="55dp"
         android:layout_height="21dp"
         android:layout_marginEnd="48dp"
-        android:layout_marginBottom="208dp"
+        android:layout_marginBottom="195dp"
         android:background="@drawable/rounded_btn3"
         android:text="9:00"
         android:textSize="11sp"
@@ -249,7 +249,7 @@
         android:layout_height="60dp"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
-        android:layout_marginBottom="108dp"
+        android:layout_marginBottom="95dp"
         android:background="@drawable/rounded_btn2"
         android:text="예약하기"
         android:textSize="16sp"
@@ -259,12 +259,11 @@
         app:layout_constraintHorizontal_bias="0.483"
         app:layout_constraintStart_toStartOf="parent" />
 
-
     <ImageView
         android:id="@+id/box3"
         android:layout_width="415dp"
         android:layout_height="102dp"
-        android:layout_marginTop="556dp"
+        android:layout_marginTop="572dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -335,16 +334,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="180dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5"
-        app:srcCompat="@drawable/line" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ScrollableDateActivity">
+
+        <EditText
+            android:id="@+id/dateLine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="225dp"
+            android:layout_marginEnd="105dp"
+            android:ems="10"
+            android:inputType="date" />
+    </RelativeLayout>
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

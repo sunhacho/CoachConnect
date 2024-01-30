@@ -6,20 +6,20 @@
     android:layout_height="match_parent"
     android:backgroundTint="#FFFFFF"
     android:background="@color/white"
-    android:orientation="vertical"
     tools:context=".TrainerInfo">
 
     <ImageView
         android:id="@+id/trImage"
-        android:layout_width="match_parent"
-        android:layout_height="138dp"
-        android:layout_marginTop="60dp"
+        android:layout_width="145dp"
+        android:layout_height="125dp"
+        android:layout_marginTop="45dp"
+        android:layout_marginBottom="18dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.06"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="0.023"
         app:srcCompat="@drawable/exclude" />
 
     <ImageButton
@@ -27,10 +27,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/trImage"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.025"
         app:srcCompat="@drawable/back" />
 
     <Button
@@ -38,7 +38,7 @@
         android:layout_width="350dp"
         android:layout_height="60dp"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="208dp"
         android:layout_marginEnd="15dp"
         android:background="@drawable/rounded_btn2"
         android:text="예약하기"
@@ -48,44 +48,72 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.483"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/trImage" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btnMessage"
-        android:layout_width="350dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="15dp"
-        android:background="@drawable/rounded_btn"
-        android:text="Message"
-        android:textColor="#000000"
-        android:textSize="16sp"
-        android:textStyle="bold"
+    <ScrollView
+        android:layout_width="411dp"
+        android:layout_height="299dp"
+        android:layout_marginBottom="85dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.508"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnBook" />
+        app:layout_constraintStart_toStartOf="parent">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
 
     <ImageView
-        android:id="@+id/imgView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="25dp"
+        android:id="@+id/box3"
+        android:layout_width="415dp"
+        android:layout_height="102dp"
+        android:layout_marginTop="572dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnMessage"
-        app:srcCompat="@drawable/rectangle3" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/background" />
 
     <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="25dp"
+        android:id="@+id/home_ic3"
+        android:layout_width="52dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/home" />
+
+    <ImageView
+        android:id="@+id/happy_ic3"
+        android:layout_width="23dp"
+        android:layout_height="23dp"
+        android:layout_marginStart="246dp"
+        android:layout_marginBottom="37dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/icon" />
+
+    <ImageView
+        android:id="@+id/profile_ic3"
+        android:layout_width="49dp"
+        android:layout_height="46dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnMessage"
-        app:srcCompat="@drawable/rectangle2" />
+        app:srcCompat="@drawable/profile" />
+
+    <ImageView
+        android:id="@+id/search_ic3"
+        android:layout_width="52dp"
+        android:layout_height="47dp"
+        android:layout_marginEnd="232dp"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/search" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,15 +1,61 @@
 package com.example.coachconnect
 
+import DateAdapter
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.graphics.drawable.GradientDrawable
 import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
+import android.os.Bundle
+import android.widget.EditText
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import java.time.LocalDate
 
 class Booking : AppCompatActivity() {
 
-    // 각 버튼에 대한 기본 스타일 설정
+    private lateinit var recyclerView: RecyclerView
+
+
+    // DatePickerDialog를 표시하는 함수
+    private fun showDatePickerDialog() {
+
+
+        val currentDate = LocalDate.now()
+        val datePickerDialog = DatePickerDialog(
+            this,
+            { _, year, month, dayOfMonth ->
+                // 선택된 날짜를 처리하는 로직을 여기에 추가
+                val selectedDate = LocalDate.of(year, month + 1, dayOfMonth)
+                // 선택된 날짜를 기반으로 날짜 목록을 업데이트
+                val updatedDateList = generateDateList(selectedDate)
+                // DateAdapter에 업데이트된 목록을 전달하여 RecyclerView 갱신
+                (recyclerView.adapter as? DateAdapter)?.updateDateList(updatedDateList)
+            },
+            currentDate.year,
+            currentDate.monthValue - 1,
+            currentDate.dayOfMonth
+        )
+        datePickerDialog.show()
+    }
+
+    private fun generateDateList(selectedDate: LocalDate?): List<String> {
+        val dateList = mutableListOf<String>()
+
+        // 만약 선택된 날짜가 null이라면 현재 날짜로 초기화
+        val today = selectedDate ?: LocalDate.now()
+
+        for (i in 0 until 7) {
+            val date = today.plusDays(i.toLong())
+            dateList.add(date.toString())
+        }
+
+        return dateList
+    }
+
+
+    // 버튼 기본 스타일 설정
     private val defaultStyle by lazy {
         getDrawable(R.drawable.rounded_btn3) as GradientDrawable
     }
@@ -21,7 +67,15 @@ class Booking : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.booking)
+        setContentView(R.layout.booking) // 여기에 레이아웃 파일 이름을 넣어야 합니다.
+
+        var dateLine = findViewById(R.id.dateLine)
+        recyclerView = findViewById(R.id.recyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+
+        dateLine.setOnClickListener {
+            showDatePickerDialog()
+        }
 
         val btn9am = findViewById<Button>(R.id.btn9am)
         val btn10am = findViewById<Button>(R.id.btn10am)
