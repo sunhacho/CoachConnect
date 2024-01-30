@@ -16,33 +16,17 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/back" />
 
-    <com.prolificinteractive.materialcalendarview.MaterialCalendarView
-        android:id="@+id/materialCalendarView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="280dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        app:mcv_selectionColor="@color/btncolor"
-        app:mcv_showOtherDates="all" />
-
     <TextView
         android:id="@+id/tv1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginBottom="5dp"
         android:text="오전"
         android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/btn9am"
         app:layout_constraintStart_toStartOf="parent" />
+
 
     <Button
         android:id="@+id/btn9am"
@@ -50,12 +34,13 @@
         android:layout_height="21dp"
         android:layout_marginStart="48dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="44dp"
+        android:layout_marginBottom="30dp"
         android:background="@drawable/rounded_btn3"
         android:text="9:00"
         android:textSize="11sp"
         app:layout_constraintBottom_toTopOf="@+id/btn12pm"
         app:layout_constraintEnd_toStartOf="@+id/btn10am"
+        app:layout_constraintHorizontal_bias="0.454"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toStartOf="parent" />
@@ -65,7 +50,7 @@
         android:layout_width="55dp"
         android:layout_height="21dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="44dp"
+        android:layout_marginBottom="30dp"
         android:background="@drawable/rounded_btn3"
         android:text="10:00"
         android:textSize="11sp"
@@ -79,7 +64,7 @@
         android:layout_width="55dp"
         android:layout_height="21dp"
         android:layout_marginEnd="178dp"
-        android:layout_marginBottom="44dp"
+        android:layout_marginBottom="30dp"
         android:background="@drawable/rounded_btn3"
         android:text="11:00"
         android:textSize="11sp"
@@ -92,8 +77,8 @@
         android:id="@+id/tv2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginBottom="5dp"
         android:text="오후"
         android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/btn12pm"
@@ -113,15 +98,29 @@
         android:textSize="11sp"
         app:layout_constraintBottom_toTopOf="@+id/btn5pm"
         app:layout_constraintEnd_toStartOf="@+id/btn1pm"
+        app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
+        android:id="@+id/btn3pm"
+        android:layout_width="55dp"
+        android:layout_height="21dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/rounded_btn3"
+        android:text="3:00"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toTopOf="@+id/btn8pm"
+        app:layout_constraintEnd_toStartOf="@+id/btn4pm"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintHorizontal_weight="1" />
+
+    <Button
         android:id="@+id/btn1pm"
         android:layout_width="55dp"
         android:layout_height="21dp"
-        android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/rounded_btn3"
@@ -146,19 +145,6 @@
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintHorizontal_weight="1" />
 
-    <Button
-        android:id="@+id/btn3pm"
-        android:layout_width="55dp"
-        android:layout_height="21dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/rounded_btn3"
-        android:text="3:00"
-        android:textSize="11sp"
-        app:layout_constraintBottom_toTopOf="@+id/btn8pm"
-        app:layout_constraintEnd_toStartOf="@+id/btn4pm"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintHorizontal_weight="1" />
 
     <Button
         android:id="@+id/btn4pm"
@@ -193,13 +179,13 @@
         android:layout_width="55dp"
         android:layout_height="21dp"
         android:layout_marginStart="10dp"
-        android:layout_marginBottom="119dp"
+        android:layout_marginBottom="208dp"
         android:background="@drawable/rounded_btn3"
         android:text="6:00"
         android:textSize="11sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn7pm"
-        app:layout_constraintHorizontal_bias="0.09"
+        app:layout_constraintHorizontal_bias="0.071"
         app:layout_constraintStart_toEndOf="@+id/btn5pm" />
 
     <Button
@@ -207,7 +193,7 @@
         android:layout_width="55dp"
         android:layout_height="21dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="119dp"
+        android:layout_marginBottom="208dp"
         android:background="@drawable/rounded_btn3"
         android:text="7:00"
         android:textSize="11sp"
@@ -221,7 +207,7 @@
         android:layout_width="55dp"
         android:layout_height="21dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="119dp"
+        android:layout_marginBottom="208dp"
         android:background="@drawable/rounded_btn3"
         android:text="8:00"
         android:textSize="11sp"
@@ -230,12 +216,13 @@
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintHorizontal_weight="1" />
 
+
     <Button
         android:id="@+id/btn9pm"
         android:layout_width="55dp"
         android:layout_height="21dp"
         android:layout_marginEnd="48dp"
-        android:layout_marginBottom="119dp"
+        android:layout_marginBottom="208dp"
         android:background="@drawable/rounded_btn3"
         android:text="9:00"
         android:textSize="11sp"
@@ -249,7 +236,7 @@
         android:layout_width="55dp"
         android:layout_height="21dp"
         android:layout_marginStart="48dp"
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="11dp"
         android:background="@drawable/rounded_btn3"
         android:text="10:00"
         android:textSize="11sp"
@@ -262,7 +249,7 @@
         android:layout_height="60dp"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="108dp"
         android:background="@drawable/rounded_btn2"
         android:text="예약하기"
         android:textSize="16sp"
@@ -271,5 +258,93 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.483"
         app:layout_constraintStart_toStartOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/box3"
+        android:layout_width="415dp"
+        android:layout_height="102dp"
+        android:layout_marginTop="556dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/background" />
+
+    <ImageView
+        android:id="@+id/home_ic3"
+        android:layout_width="52dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/home" />
+
+    <ImageView
+        android:id="@+id/happy_ic3"
+        android:layout_width="23dp"
+        android:layout_height="23dp"
+        android:layout_marginStart="246dp"
+        android:layout_marginBottom="37dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/icon" />
+
+    <ImageView
+        android:id="@+id/profile_ic3"
+        android:layout_width="49dp"
+        android:layout_height="46dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/profile" />
+
+    <ImageView
+        android:id="@+id/search_ic3"
+        android:layout_width="52dp"
+        android:layout_height="47dp"
+        android:layout_marginEnd="232dp"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/search" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="144dp"
+        android:layout_marginTop="80dp"
+        android:text="트레이너"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="82dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="25dp"
+        android:text="시간 예약"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="180dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView5"
+        app:srcCompat="@drawable/line" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
