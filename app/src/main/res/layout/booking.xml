@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:textAlignment="center"
     tools:context=".Booking">
 
     <ImageButton
@@ -179,7 +180,7 @@
         android:layout_width="55dp"
         android:layout_height="21dp"
         android:layout_marginStart="10dp"
-        android:layout_marginBottom="195dp"
+        android:layout_marginBottom="209dp"
         android:background="@drawable/rounded_btn3"
         android:text="6:00"
         android:textSize="11sp"
@@ -193,7 +194,7 @@
         android:layout_width="55dp"
         android:layout_height="21dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="195dp"
+        android:layout_marginBottom="209dp"
         android:background="@drawable/rounded_btn3"
         android:text="7:00"
         android:textSize="11sp"
@@ -207,7 +208,7 @@
         android:layout_width="55dp"
         android:layout_height="21dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="195dp"
+        android:layout_marginBottom="209dp"
         android:background="@drawable/rounded_btn3"
         android:text="8:00"
         android:textSize="11sp"
@@ -222,7 +223,7 @@
         android:layout_width="55dp"
         android:layout_height="21dp"
         android:layout_marginEnd="48dp"
-        android:layout_marginBottom="195dp"
+        android:layout_marginBottom="209dp"
         android:background="@drawable/rounded_btn3"
         android:text="9:00"
         android:textSize="11sp"
@@ -236,7 +237,7 @@
         android:layout_width="55dp"
         android:layout_height="21dp"
         android:layout_marginStart="48dp"
-        android:layout_marginBottom="11dp"
+        android:layout_marginBottom="25dp"
         android:background="@drawable/rounded_btn3"
         android:text="10:00"
         android:textSize="11sp"
@@ -313,8 +314,8 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="144dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginStart="176dp"
+        android:layout_marginTop="128dp"
         android:text="트레이너"
         android:textColor="@color/black"
         android:textSize="24sp"
@@ -334,23 +335,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ScrollableDateActivity">
-
-        <EditText
-            android:id="@+id/dateLine"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="225dp"
-            android:layout_marginEnd="105dp"
-            android:ems="10"
-            android:inputType="date" />
-    </RelativeLayout>
-
+    <EditText
+        android:id="@+id/dateLine"
+        android:layout_width="290dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="228dp"
+        android:ems="10"
+        android:hint="날짜를 선택해주세요"
+        android:inputType="date"
+        android:textAlignment="center"
+        android:textColorHint="#B1B1B1"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

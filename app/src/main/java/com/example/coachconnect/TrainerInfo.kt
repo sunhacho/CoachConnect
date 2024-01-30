@@ -36,7 +36,15 @@ class TrainerInfo : AppCompatActivity() {
         // 하단 바 클릭 시
         home_ic3.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
         }
-
+        happy_ic3.setOnClickListener {
+            val intent = Intent(this, GoalsettingActivity::class.java)
+            startActivity(intent)
+        }
+        profile_ic3.setOnClickListener {
+            val intent = Intent(this, ProfileActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

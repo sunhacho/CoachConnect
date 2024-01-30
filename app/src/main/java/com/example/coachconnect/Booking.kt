@@ -1,59 +1,26 @@
 package com.example.coachconnect
 
-import DateAdapter
 import android.app.DatePickerDialog
+import android.app.Dialog
 import android.content.Intent
 import android.graphics.drawable.GradientDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.Button
 import android.widget.Toast
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.widget.EditText
+import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import java.time.LocalDate
+import java.util.Calendar
 
 class Booking : AppCompatActivity() {
 
-    private lateinit var recyclerView: RecyclerView
-
-
-    // DatePickerDialog를 표시하는 함수
-    private fun showDatePickerDialog() {
-
-
-        val currentDate = LocalDate.now()
-        val datePickerDialog = DatePickerDialog(
-            this,
-            { _, year, month, dayOfMonth ->
-                // 선택된 날짜를 처리하는 로직을 여기에 추가
-                val selectedDate = LocalDate.of(year, month + 1, dayOfMonth)
-                // 선택된 날짜를 기반으로 날짜 목록을 업데이트
-                val updatedDateList = generateDateList(selectedDate)
-                // DateAdapter에 업데이트된 목록을 전달하여 RecyclerView 갱신
-                (recyclerView.adapter as? DateAdapter)?.updateDateList(updatedDateList)
-            },
-            currentDate.year,
-            currentDate.monthValue - 1,
-            currentDate.dayOfMonth
-        )
-        datePickerDialog.show()
+    companion object {
+        const val DIALOG_DATE = 1
     }
-
-    private fun generateDateList(selectedDate: LocalDate?): List<String> {
-        val dateList = mutableListOf<String>()
-
-        // 만약 선택된 날짜가 null이라면 현재 날짜로 초기화
-        val today = selectedDate ?: LocalDate.now()
-
-        for (i in 0 until 7) {
-            val date = today.plusDays(i.toLong())
-            dateList.add(date.toString())
-        }
-
-        return dateList
-    }
-
 
     // 버튼 기본 스타일 설정
     private val defaultStyle by lazy {
@@ -67,17 +34,12 @@ class Booking : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.booking) // 여기에 레이아웃 파일 이름을 넣어야 합니다.
+        setContentView(R.layout.booking)
 
-        var dateLine = findViewById(R.id.dateLine)
-
-
-        recyclerView = findViewById(R.id.recyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-
-        dateLine.setOnClickListener {
-            showDatePickerDialog()
-        }
+        val home_ic3 = findViewById<ImageView>(R.id.home_ic3)
+        val search_ic3 = findViewById<ImageView>(R.id.search_ic3)
+        val happy_ic3 = findViewById<ImageView>(R.id.happy_ic3)
+        val profile_ic3 = findViewById<ImageView>(R.id.profile_ic3)
 
         val btn9am = findViewById<Button>(R.id.btn9am)
         val btn10am = findViewById<Button>(R.id.btn10am)
@@ -136,7 +98,59 @@ class Booking : AppCompatActivity() {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
+
+
+        // 하단 바 클릭 시
+        home_ic3.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+        happy_ic3.setOnClickListener {
+            val intent = Intent(this, GoalsettingActivity::class.java)
+            startActivity(intent)
+        }
+        profile_ic3.setOnClickListener {
+            val intent = Intent(this, ProfileActivity::class.java)
+            startActivity(intent)
+        }
     }
+
+    // 캘린더 날짜 설정
+    override fun onCreateDialog(id: Int): Dialog {
+
+        // Date
+        val dateLine = findViewById<EditText>(R.id.dateLine)
+        dateLine.setOnClickListener {
+            showDialog(DIALOG_DATE)
+        }
+
+        val calendar = Calendar.getInstance()
+
+        return when (id) {
+            DIALOG_DATE -> {
+                val datePickerDialog = DatePickerDialog(
+                    this,
+                    DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+
+                        val selectedDate = "$year 년 ${(month + 1)}월 $dayOfMonth 일"
+                        dateLine.setText(selectedDate) // 선택된 날짜를 EditText에 설정
+                        showToast("$selectedDate 을 선택했습니다")
+                    },
+                    calendar.get(Calendar.YEAR),
+                    calendar.get(Calendar.MONTH),
+                    calendar.get(Calendar.DAY_OF_MONTH)
+                )
+
+                // 현재 날짜 이전의 날짜는 선택 불가능하도록 설정
+                datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
+
+                datePickerDialog
+            }
+
+            else -> super.onCreateDialog(id)
+        }
+    }
+
 
     // 각 버튼 클릭 시 호출되는 함수
     private fun onButtonClick(button: Button) {
@@ -153,4 +167,5 @@ class Booking : AppCompatActivity() {
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
+
 }
