@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.TextView
 
 class TrainerInfo : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,6 +19,7 @@ class TrainerInfo : AppCompatActivity() {
         val search_ic3 = findViewById<ImageView>(R.id.search_ic3)
         val happy_ic3 = findViewById<ImageView>(R.id.happy_ic3)
         val profile_ic3 = findViewById<ImageView>(R.id.profile_ic3)
+        val trName = findViewById<TextView>(R.id.trName)
 
         // 예약하기 클릭 시
         btnBook.setOnClickListener {
@@ -27,11 +29,11 @@ class TrainerInfo : AppCompatActivity() {
         }
 
         // back 버튼 클릭 시
-        //back.setOnClickListener {
+        back.setOnClickListener {
         // 트레이너 목록 액티비티로 이동
-        // val intent = Intent(this, 트레이너 목록 페이지::class.java)
-        // startActivity(intent)
-        //}
+        val intent = Intent(this, TrainerList::class.java)
+        startActivity(intent)
+        }
 
         // 하단 바 클릭 시
 
