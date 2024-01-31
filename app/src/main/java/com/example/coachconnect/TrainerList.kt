@@ -10,12 +10,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ListView
 
-import android.widget.TextView
-import java.util.jar.Attributes
-
-
-
-
 
 class TrainerList : AppCompatActivity() {
     lateinit var dbHelper: DBHelper
@@ -23,7 +17,7 @@ class TrainerList : AppCompatActivity() {
     lateinit var layout: LinearLayout
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.trainer_db)
+        setContentView(R.layout.trainer_list)
 
         dbHelper = DBHelper(this)
 
