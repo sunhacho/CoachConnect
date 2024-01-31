@@ -21,6 +21,10 @@ class TrainerInfo : AppCompatActivity() {
         val profile_ic3 = findViewById<ImageView>(R.id.profile_ic3)
         val trName = findViewById<TextView>(R.id.trName)
 
+        val trainerName = intent.getStringExtra("trainerName")
+        val trainerName1 = trainerName?.substring(0,3)
+        trName.text = trainerName1
+
         // 예약하기 클릭 시
         btnBook.setOnClickListener {
             // booking 액티비티로 이동
