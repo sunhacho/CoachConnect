@@ -38,8 +38,9 @@ class TrainerList : AppCompatActivity() {
             hashtag = "#ESTJ #난이도중상 #호랑이트레이너",
             location = "에이블짐 노원본점"
         )
-        dbHelper.addTrainer(tr1)
-
+        if (!dbHelper.isTrainerExists(tr1.name)) {
+            dbHelper.addTrainer(tr1)
+        }
         val tr2 = Trainer(
             id = 2,
             name = "정인규 트레이너",
@@ -50,8 +51,9 @@ class TrainerList : AppCompatActivity() {
             hashtag = "#ENFP #난이도상 #교정전문트레이너",
             location = "에이블짐 공릉점"
         )
-        dbHelper.addTrainer(tr2)
-
+        if (!dbHelper.isTrainerExists(tr2.name)) {
+            dbHelper.addTrainer(tr2)
+        }
         val tr3 = Trainer(
             id = 3,
             name = "이정은 트레이너",
@@ -61,8 +63,9 @@ class TrainerList : AppCompatActivity() {
             hashtag = "#ENFJ #난이도하 #학생전문트레이너",
             location = "에이블짐 공릉점"
         )
-        dbHelper.addTrainer(tr3)
-
+        if (!dbHelper.isTrainerExists(tr3.name)) {
+            dbHelper.addTrainer(tr3)
+        }
         val tr4 = Trainer(
             id = 4,
             name = "임예슬 트레이너",
@@ -72,8 +75,9 @@ class TrainerList : AppCompatActivity() {
             hashtag = "#ISTJ #난이도중 #다이어트전문트레이너",
             location = "에이블짐 노원본점"
         )
-        dbHelper.addTrainer(tr4)
-
+        if (!dbHelper.isTrainerExists(tr4.name)) {
+            dbHelper.addTrainer(tr4)
+        }
         val tr5 = Trainer(
             id = 5,
             name = "이승준 트레이너",
@@ -83,8 +87,9 @@ class TrainerList : AppCompatActivity() {
             hashtag = "#ISTP #난이도최하 #기초체력향상트레이너",
             location = "에이블짐 공릉점"
         )
-        dbHelper.addTrainer(tr5)
-
+        if (!dbHelper.isTrainerExists(tr5.name)) {
+            dbHelper.addTrainer(tr5)
+        }
         val tr6 = Trainer(
             id = 6,
             name = "김연미 트레이너",
@@ -94,8 +99,9 @@ class TrainerList : AppCompatActivity() {
             hashtag = "#INFJ #난이도중상 #재활전문트레이너",
             location = "에이블짐 노원본점"
         )
-        dbHelper.addTrainer(tr6)
-
+        if (!dbHelper.isTrainerExists(tr6.name)) {
+            dbHelper.addTrainer(tr6)
+        }
         val tr7 = Trainer(
             id = 7,
             name = "강승연 트레이너",
@@ -105,8 +111,9 @@ class TrainerList : AppCompatActivity() {
             hashtag = "#ISFP #난이도중하 #여성전문트레이너",
             location = "에이블짐 공릉점"
         )
-        dbHelper.addTrainer(tr7)
-
+        if (!dbHelper.isTrainerExists(tr7.name)) {
+            dbHelper.addTrainer(tr7)
+        }
         val tr8 = Trainer(
             id = 8,
             name = "이건욱 트레이너",
@@ -116,9 +123,10 @@ class TrainerList : AppCompatActivity() {
             hashtag = "#ENFJ #난이도상 #바디프로필전문트레이너",
             location = "에이블짐 노원본점"
         )
-        dbHelper.addTrainer(tr8)
+        if (!dbHelper.isTrainerExists(tr8.name)) {
+            dbHelper.addTrainer(tr8)
+        }
 
-        // 리스트 어댑터 초기화
         val listView: ListView = findViewById(R.id.listView)
         adapter =
             object : ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, dataList) {
@@ -139,8 +147,34 @@ class TrainerList : AppCompatActivity() {
         listView.setOnItemClickListener { _, _, position, _ ->
             val clickedItemData = dataList[position]
             val intent = Intent(this, TrainerInfo::class.java)
+            // 각 데이터를 개별적으로 가져오기
+            val trainerName = clickedItemData.substringBefore("\n")
+            val trainerHashtag = clickedItemData.substringAfter("\n").substringBefore("\n")
+            val trainerLocation = clickedItemData.substringAfterLast("📍")
 
-            intent.putExtra("trainerName", clickedItemData.substringBefore("\n"))
+            // 데이터를 TrainerInfo 액티비티로 전달
+            intent.putExtra("trainerName", trainerName)
+            intent.putExtra("trainerHashtag", trainerHashtag)
+            intent.putExtra("trainerLocation", trainerLocation)
+
+
+            // 데이터베이스에서 education과 qualification 정보 읽어오기
+            val dbHelper = DBHelper(this)
+            val db = dbHelper.readableDatabase
+            val cursor = db.rawQuery("SELECT ${DBHelper.KEY_EDUCATION}, ${DBHelper.KEY_QUALIFICATION} FROM ${DBHelper.TABLE_TRAINERS} WHERE ${DBHelper.KEY_NAME} = ?", arrayOf(trainerName))
+
+            if (cursor.moveToFirst()) {
+                val education = cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.KEY_EDUCATION))
+                val qualification = cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.KEY_QUALIFICATION))
+
+                // TrainerInfo 액티비티로 education과 qualification 정보 전달
+                intent.putExtra("trainerEducation", education)
+                intent.putExtra("trainerQualification", qualification)
+            }
+
+            cursor.close()
+            db.close()
+
             startActivity(intent)
         }
 

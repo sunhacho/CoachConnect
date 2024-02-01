@@ -10,6 +10,7 @@ import android.widget.Toast
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -66,6 +67,7 @@ class Booking : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.booking)
 
+        val back2 = findViewById<ImageButton>(R.id.back2)
         val home_ic3 = findViewById<ImageView>(R.id.home_ic3)
         val search_ic3 = findViewById<ImageView>(R.id.search_ic3)
         val happy_ic3 = findViewById<ImageView>(R.id.happy_ic3)
@@ -149,6 +151,12 @@ class Booking : AppCompatActivity() {
             startActivity(intent)
         }
 
+        // back 버튼 클릭 시
+        back2.setOnClickListener {
+            // 트레이너 목록 액티비티로 이동
+            val intent = Intent(this, TrainerInfo::class.java)
+            startActivity(intent)
+        }
 
         // 하단 바 클릭 시
 

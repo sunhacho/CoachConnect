@@ -8,6 +8,16 @@ import android.database.sqlite.SQLiteOpenHelper
 
 class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
+    fun isTrainerExists(trainerName: String): Boolean {
+        val db = readableDatabase
+        val query = "SELECT * FROM $TABLE_TRAINERS WHERE $KEY_NAME = ?"
+        val cursor = db.rawQuery(query, arrayOf(trainerName))
+        val exists = cursor.count > 0
+        cursor.close()
+        db.close()
+        return exists
+    }
+
     companion object {
         private const val DATABASE_VERSION = 1
         const val DATABASE_NAME = "trainerDB.db"
