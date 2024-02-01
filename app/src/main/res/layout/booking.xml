@@ -9,6 +9,19 @@
     android:textAlignment="center"
     tools:context=".Booking">
 
+    <TextView
+        android:id="@+id/trName2"
+        android:layout_width="123dp"
+        android:layout_height="63dp"
+        android:layout_marginTop="108dp"
+        android:layout_marginEnd="247dp"
+        android:fontFamily="sans-serif"
+        android:textColor="#535353"
+        android:textSize="44sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageButton
         android:id="@+id/back2"
         android:layout_width="wrap_content"

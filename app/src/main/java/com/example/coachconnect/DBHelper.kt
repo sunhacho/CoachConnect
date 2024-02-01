@@ -5,12 +5,14 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 
 class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
     fun isTrainerExists(trainerName: String): Boolean {
+        val trimmedName = trainerName.trim() // 공백 제거
         val db = readableDatabase
-        val query = "SELECT * FROM $TABLE_TRAINERS WHERE $KEY_NAME = ?"
+        val query = "SELECT * FROM $TABLE_TRAINERS WHERE $KEY_NAME =?"
         val cursor = db.rawQuery(query, arrayOf(trainerName))
         val exists = cursor.count > 0
         cursor.close()

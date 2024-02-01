@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
@@ -30,7 +31,7 @@ class TrainerList : AppCompatActivity() {
         // 트레이너 추가
         val tr1 = Trainer(
             id = 1,
-            name = "김민서 트레이너",
+            name = "김민서",
             education = "서울여자대학교 체육학과 학사 졸업\n" +
                     "서울여자대학교 체육학과 석사 재학 중",
             qualification = "생활체육지도자 자격증 1급 (건강운동관리사)\n" +
@@ -43,7 +44,7 @@ class TrainerList : AppCompatActivity() {
         }
         val tr2 = Trainer(
             id = 2,
-            name = "정인규 트레이너",
+            name = "정인규",
             education = "한국체육대학교 운동건강관리학과 졸업",
             qualification = "생활스포츠지도자2급 보디빌딩\n" +
                     "body1st 체형분석운동지도자 basic\n" +
@@ -56,7 +57,7 @@ class TrainerList : AppCompatActivity() {
         }
         val tr3 = Trainer(
             id = 3,
-            name = "이정은 트레이너",
+            name = "이정은",
             education = "한국체육대학교 사회체육학과 졸업",
             qualification = "생활 스포츠 지도자 2급 (보디빌딩)\n" +
                     "유아 아동 체육 지도자 1급",
@@ -68,7 +69,7 @@ class TrainerList : AppCompatActivity() {
         }
         val tr4 = Trainer(
             id = 4,
-            name = "임예슬 트레이너",
+            name = "임예슬",
             education = "고려대학교 체육교육과 졸업",
             qualification = "대한운동사협회 정회원\n" +
                     "소도구 트레이닝 수료",
@@ -80,7 +81,7 @@ class TrainerList : AppCompatActivity() {
         }
         val tr5 = Trainer(
             id = 5,
-            name = "이승준 트레이너",
+            name = "이승준",
             education = "한국체육대학교 노인체육복지학과 졸업",
             qualification = "기관생명윤리 위원회 연구자 교육 이수\n" +
                     "생활체육지도자 보디빌딩 3급",
@@ -92,7 +93,7 @@ class TrainerList : AppCompatActivity() {
         }
         val tr6 = Trainer(
             id = 6,
-            name = "김연미 트레이너",
+            name = "김연미",
             education = "단국대학교 대학원 스포츠 재활 석사",
             qualification = "스포츠 재활 임상 경력 15년차\n" +
                     "생활 스포츠 지도자 2급",
@@ -104,7 +105,7 @@ class TrainerList : AppCompatActivity() {
         }
         val tr7 = Trainer(
             id = 7,
-            name = "강승연 트레이너",
+            name = "강승연",
             education = "서울대학교 체육학과 졸업",
             qualification = "산전산후 여성 전문 트레이너 수료\n" +
                     "bastm technique 수료",
@@ -116,7 +117,7 @@ class TrainerList : AppCompatActivity() {
         }
         val tr8 = Trainer(
             id = 8,
-            name = "이건욱 트레이너",
+            name = "이건욱",
             education = "한국체육대학교 태권도학과 졸업",
             qualification = "태권도 국가대표 출신\n" +
                     "생활체육지도자 보디빌딩 3급",
@@ -161,15 +162,14 @@ class TrainerList : AppCompatActivity() {
             // 데이터베이스에서 education과 qualification 정보 읽어오기
             val dbHelper = DBHelper(this)
             val db = dbHelper.readableDatabase
-            val cursor = db.rawQuery("SELECT ${DBHelper.KEY_EDUCATION}, ${DBHelper.KEY_QUALIFICATION} FROM ${DBHelper.TABLE_TRAINERS} WHERE ${DBHelper.KEY_NAME} = ?", arrayOf(trainerName))
-
-            if (cursor.moveToFirst()) {
-                val education = cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.KEY_EDUCATION))
-                val qualification = cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.KEY_QUALIFICATION))
+            val cursor = db.rawQuery("SELECT ${DBHelper.KEY_EDUCATION}, ${DBHelper.KEY_QUALIFICATION} FROM ${DBHelper.TABLE_TRAINERS} WHERE ${DBHelper.KEY_NAME} =?", arrayOf(trainerName))
+            if (cursor.moveToNext()) {
+                val trainerEducation = cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.KEY_EDUCATION))
+                val trainerQualification = cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.KEY_QUALIFICATION))
 
                 // TrainerInfo 액티비티로 education과 qualification 정보 전달
-                intent.putExtra("trainerEducation", education)
-                intent.putExtra("trainerQualification", qualification)
+                intent.putExtra("trainerEducation", trainerEducation)
+                intent.putExtra("trainerQualification", trainerQualification)
             }
 
             cursor.close()
@@ -228,7 +228,7 @@ class TrainerList : AppCompatActivity() {
                 cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.KEY_LOCATION))
 
             // 중복 데이터 방지를 위해 데이터가 없을 때만 추가
-            val newData = "$trainerName \n $trainerHashtag \n 📍$trainerLocation"
+            val newData = "$trainerName 트레이너 \n $trainerHashtag \n 📍$trainerLocation"
             if (!dataList.contains(newData)) {
                 dataList.add(newData)
             }

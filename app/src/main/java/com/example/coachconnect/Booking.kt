@@ -12,28 +12,44 @@ import android.os.PersistableBundle
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import java.time.LocalDate
 import java.util.Calendar
 
 class Booking : AppCompatActivity() {
-
-
     // 시간 버튼
-    private var selectedTime: String? = null
+    private var clickedTime: String = ""
+
+    // 선택된 시간을 저장하는 리스트
+    private val selectedTimes: MutableList<String> = mutableListOf()
 
     // 각 버튼 클릭 시 호출되는 함수
     private fun onTimeButtonClick(button: Button) {
         // 선택된 버튼의 텍스트(시간)를 가져와서 저장
-        selectedTime = button.text.toString()
-        // 버튼의 변수명으로 오전, 오후 판별
-        val isAM = button.id.toString().contains("am", ignoreCase = true)
-        val isPM = button.id.toString().contains("pm", ignoreCase = true)
+        clickedTime = button.text.toString()
+        // 이미 선택된 시간인지 확인
+        if (selectedTimes.contains(clickedTime)) {
+            // 이미 선택된 경우, 선택을 해제하고 스타일을 원래대로 변경
+            selectedTimes.remove(clickedTime)
+            setButtonStyle(button, defaultStyle)
+        } else {
+            // 선택되지 않은 경우, 최대 두 개까지만 선택 가능
+            if (selectedTimes.size < 2) {
+                selectedTimes.add(clickedTime)
+                setButtonStyle(button, clickedStyle)
+            } else {
+                showToast("최대 두 개의 시간만 선택 가능합니다.")
+            }
+        }
     }
-    private fun onButtonClick(button: Button) {
-        // 클릭된 버튼에 대한 스타일 적용
-        setButtonStyle(button, clickedStyle)
+    private fun getAmPmFromButtonId(buttonId: Int): String {
+        return when {
+            buttonId.toString().contains("am", ignoreCase = true) -> "오전"
+            buttonId.toString().contains("pm", ignoreCase = true) -> "오후"
+            else -> ""
+        }
     }
 
     // 버튼에 스타일 적용하는 함수
@@ -72,6 +88,11 @@ class Booking : AppCompatActivity() {
         val search_ic3 = findViewById<ImageView>(R.id.search_ic3)
         val happy_ic3 = findViewById<ImageView>(R.id.happy_ic3)
         val profile_ic3 = findViewById<ImageView>(R.id.profile_ic3)
+        val trName2 = findViewById<TextView>(R.id.trName2)
+
+        val trainerName = intent.getStringExtra("trainerName")
+        val trainerName1 = trainerName?.substring(0,3)
+        trName2.text = trainerName1
 
         val btn9am = findViewById<Button>(R.id.btn9am)
         val btn10am = findViewById<Button>(R.id.btn10am)
@@ -106,21 +127,20 @@ class Booking : AppCompatActivity() {
         setButtonStyle(btn10pm, defaultStyle)
 
         // 각 버튼에 클릭 리스너 등록
-        btn9am.setOnClickListener { onButtonClick(btn9am) }
-        btn10am.setOnClickListener { onButtonClick(btn10am) }
-        btn11am.setOnClickListener { onButtonClick(btn11am) }
-        btn12pm.setOnClickListener { onButtonClick(btn12pm) }
-        btn1pm.setOnClickListener { onButtonClick(btn1pm) }
-        btn2pm.setOnClickListener { onButtonClick(btn2pm) }
-        btn3pm.setOnClickListener { onButtonClick(btn3pm) }
-        btn4pm.setOnClickListener { onButtonClick(btn4pm) }
-        btn5pm.setOnClickListener { onButtonClick(btn5pm) }
-        btn6pm.setOnClickListener { onButtonClick(btn6pm) }
-        btn7pm.setOnClickListener { onButtonClick(btn7pm) }
-        btn8pm.setOnClickListener { onButtonClick(btn8pm) }
-        btn9pm.setOnClickListener { onButtonClick(btn9pm) }
-        btn10pm.setOnClickListener { onButtonClick(btn10pm) }
-
+        btn9am.setOnClickListener { onTimeButtonClick(btn9am) }
+        btn10am.setOnClickListener { onTimeButtonClick(btn10am) }
+        btn11am.setOnClickListener { onTimeButtonClick(btn11am) }
+        btn12pm.setOnClickListener { onTimeButtonClick(btn12pm) }
+        btn1pm.setOnClickListener { onTimeButtonClick(btn1pm) }
+        btn2pm.setOnClickListener { onTimeButtonClick(btn2pm) }
+        btn3pm.setOnClickListener { onTimeButtonClick(btn3pm) }
+        btn4pm.setOnClickListener { onTimeButtonClick(btn4pm) }
+        btn5pm.setOnClickListener { onTimeButtonClick(btn5pm) }
+        btn6pm.setOnClickListener { onTimeButtonClick(btn6pm) }
+        btn7pm.setOnClickListener { onTimeButtonClick(btn7pm) }
+        btn8pm.setOnClickListener { onTimeButtonClick(btn8pm) }
+        btn9pm.setOnClickListener { onTimeButtonClick(btn9pm) }
+        btn10pm.setOnClickListener { onTimeButtonClick(btn10pm) }
 
         // 날짜
         val dateLine = findViewById<EditText>(R.id.dateLine)
@@ -130,18 +150,20 @@ class Booking : AppCompatActivity() {
 
         // 예약하기 버튼에 클릭 리스너 등록
         btnBook2.setOnClickListener {
+            // 선택된 정보를 메인 화면으로 전달
+            intent.putExtra("trainerName", trainerName)
+            intent.putExtra("selectedTimes", selectedTimes.toTypedArray())
+            intent.putExtra("selectedDate", dateLine.text.toString())
 
+            // 오전/오후 정보를 전달
+            for (time in selectedTimes) {
+                val buttonId = resources.getIdentifier("btn${time.replace(":", "").toLowerCase()}", "id", packageName)
+                val amPm = getAmPmFromButtonId(buttonId)
+                intent.putExtra("amPm_$time", amPm)
+            }
 
-            // SharedPreferences 객체 생성
-            val sharedPreferences = getSharedPreferences("booking_info", MODE_PRIVATE)
-            val editor = sharedPreferences.edit()
-
-            // 예약 정보 저장 (예시로 날짜와 시간을 저장)
-            editor.putString("selectedDate", dateLine.text.toString())
-            editor.putString("selectedTime", selectedTime)
-
-            // 변경사항 저장
-            editor.apply()
+            setResult(RESULT_OK, intent) // 이 부분을 추가해야 합니다.
+            finish() // 이 부분을 추가해야 합니다.
 
             // 토스트 메시지 표시
             showToast("예약이 완료되었습니다.")

@@ -5,6 +5,7 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
@@ -28,37 +29,32 @@ class TrainerInfo : AppCompatActivity() {
         val trName = findViewById<TextView>(R.id.trName)
         val hashtag = findViewById<TextView>(R.id.hashtag)
         val location = findViewById<TextView>(R.id.location)
+        val education = findViewById<TextView>(R.id.edu)
+        val qualification = findViewById<TextView>(R.id.quali)
 
         val trainerName = intent.getStringExtra("trainerName")
-        val trainerName1 = trainerName?.substring(0, 3)
+        val trainerName1 = trainerName?.substring(0,3)
         val trainerHashtag = intent.getStringExtra("trainerHashtag")
         val trainerLocation = intent.getStringExtra("trainerLocation")
-
-        // 데이터베이스에서 education과 qualification 정보 읽어오기
-        val dbHelper = DBHelper(this)
-        val db: SQLiteDatabase = dbHelper.readableDatabase
-        val cursor: Cursor = db.rawQuery("SELECT * FROM ${DBHelper.TABLE_TRAINERS} WHERE ${DBHelper.KEY_NAME} = ?", arrayOf(trainerName))
-        if (cursor.moveToNext()) {
-            val education = cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.KEY_EDUCATION))
-            val qualification = cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.KEY_QUALIFICATION))
-
-//          TrainerInfo 액티비티의 TextView에 데이터 설정
-            val edu = findViewById<TextView>(R.id.edu)
-            val quali = findViewById<TextView>(R.id.quali)
-            edu.text = education
-            quali.text = qualification
-        }
-        cursor.close()
-        db.close()
-
+        val trainerEducation = intent.getStringExtra("trainerEducation")
+        val trainerQualification = intent.getStringExtra("trainerQualification")
+        Log.d("TrainerInfo", "Trainer Name: $trainerName")
+        Log.d("TrainerInfo", "Trainer Location: $trainerLocation")
+        Log.d("TrainerInfo", "Trainer Education: $trainerEducation")
+        Log.d("TrainerInfo", "Trainer Qualification: $trainerQualification")
         trName.text = trainerName1
         hashtag.text = trainerHashtag
         location.text = trainerLocation
+        education.text = trainerEducation
+        qualification.text = trainerQualification
+
 
         // 예약하기 클릭 시
         btnBook.setOnClickListener {
-            // booking 액티비티로 이동
-            val intent = Intent(this, Booking::class.java)
+            val intent = Intent(this, Booking::class.java).apply {
+                putExtra("trainerName", trainerName)
+                putExtra("trainerLocation", trainerLocation)
+            }
             startActivity(intent)
         }
 
