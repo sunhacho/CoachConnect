@@ -45,6 +45,7 @@
         app:layout_constraintTop_toBottomOf="@+id/trainer_text" />
 
     <TextView
+        android:id="@+id/no_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="72dp"
@@ -55,16 +56,16 @@
 
     <ImageView
         android:id="@+id/box_ic2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="330dp"
+        android:layout_height="150dp"
         android:layout_marginBottom="268dp"
-        android:background="@color/btncolor"
+        android:background="@color/white"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/box"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/rectangle" />
+        app:srcCompat="@drawable/rectangular_background" />
 
     <TextView
         android:id="@+id/bkInfo1"
@@ -72,12 +73,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="76dp"
         android:text=""
-        android:textColor="@color/white"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        android:backgroundTint="@android:color/transparent"/>
 
     <ImageView
         android:id="@+id/box"
