@@ -184,7 +184,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="101dp"
                         android:layout_marginEnd="100dp"
-                        android:layout_marginBottom="4dp"
+                        android:layout_marginBottom="11dp"
                         android:ems="10"
                         android:gravity="center"
                         android:inputType="text"
@@ -215,7 +215,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="101dp"
                         android:layout_marginEnd="100dp"
-                        android:layout_marginBottom="9dp"
+                        android:layout_marginBottom="11dp"
                         android:clickable="true"
                         android:cursorVisible="false"
                         android:ems="10"
@@ -250,14 +250,44 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="101dp"
                         android:layout_marginEnd="1dp"
-                        android:layout_marginBottom="13dp"
+                        android:layout_marginBottom="11dp"
+                        android:ems="10"
+                        android:gravity="center"
+                        android:inputType="number"
+                        android:minWidth="48dp"
+                        android:minHeight="48dp"
+                        app:layout_constraintBottom_toTopOf="@+id/nowWeight"
+                        app:layout_constraintStart_toStartOf="parent"
+                        tools:ignore="MissingConstraints,SpeakableTextPresentCheck" />
+
+
+                    <TextView
+                        android:id="@+id/nowWeight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="178dp"
+                        android:layout_marginEnd="178dp"
+                        android:layout_marginBottom="1dp"
+                        android:text="현재 체중"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toTopOf="@+id/nowWeightData"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        tools:ignore="MissingConstraints" />
+
+
+                    <EditText
+                        android:id="@+id/nowWeightData"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="102dp"
+                        android:layout_marginBottom="11dp"
                         android:ems="10"
                         android:gravity="center"
                         android:inputType="number"
                         android:minWidth="48dp"
                         android:minHeight="48dp"
                         app:layout_constraintBottom_toTopOf="@+id/targetWeight"
-                        app:layout_constraintEnd_toStartOf="@+id/cm"
                         app:layout_constraintStart_toStartOf="parent"
                         tools:ignore="MissingConstraints,SpeakableTextPresentCheck" />
 
@@ -287,31 +317,8 @@
                         android:minWidth="48dp"
                         android:minHeight="48dp"
                         app:layout_constraintBottom_toTopOf="@+id/button3"
-                        app:layout_constraintEnd_toStartOf="@+id/kg"
                         app:layout_constraintStart_toStartOf="parent"
                         tools:ignore="MissingConstraints,SpeakableTextPresentCheck" />
-
-                    <TextView
-                        android:id="@+id/cm"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="72dp"
-                        android:layout_marginBottom="41dp"
-                        android:text="(cm)"
-                        app:layout_constraintBottom_toTopOf="@+id/targetWeightData"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        tools:ignore="MissingConstraints" />
-
-                    <TextView
-                        android:id="@+id/kg"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="74dp"
-                        android:layout_marginBottom="54dp"
-                        android:text="(kg)"
-                        app:layout_constraintBottom_toTopOf="@+id/button3"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        tools:ignore="MissingConstraints" />
 
                     <Button
                         android:id="@+id/button3"
