@@ -76,6 +76,7 @@
         android:text="목표 설정"
         android:textSize="20dp"
         android:textStyle="bold"
+        android:textColor="@android:color/black"
         android:background="@color/white"
         android:gravity="center"
         android:padding="16dp" />
@@ -87,6 +88,7 @@
         android:text="도전할 목표를 설정해주세요"
         android:textSize="18dp"
         android:textStyle="bold"
+        android:textColor="@android:color/black"
         android:gravity="center"
         android:layout_below="@id/challengeTextView1"
         android:padding="16dp"
@@ -148,6 +150,7 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="16dp"
                         android:text="운동 목적"
+                        android:textColor="@android:color/black"
                         android:textSize="20dp"
                         android:textStyle="bold" />
 
@@ -220,6 +223,7 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginStart="16dp"
                         android:text="운동 강도"
+                        android:textColor="@android:color/black"
                         android:textSize="20dp"
                         android:textStyle="bold"/>
 
@@ -279,6 +283,7 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginStart="16dp"
                         android:text="운동 계획"
+                        android:textColor="@android:color/black"
                         android:textSize="20dp"
                         android:textStyle="bold"/>
 
