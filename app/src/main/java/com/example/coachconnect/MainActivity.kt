@@ -16,30 +16,28 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-//        // SharedPreferences에서 예약 정보 불러오기
-//        val sharedPreferences = getSharedPreferences("booking_info", MODE_PRIVATE)
-//        val selectedDate = sharedPreferences.getString("selectedDate", "")
-//        val selectedTime = sharedPreferences.getString("selectedTime", "")
-//
-//        // 오전과 오후를 구분하여 표시할 변수
-//        val timePeriod: String = when {
-//            selectedTime?.contains("am", ignoreCase = true) == true -> "오전"
-//            selectedTime?.contains("pm", ignoreCase = true) == true -> "오후"
-//            else -> "" // 오전/오후가 아닌 경우
-//        }
-//
-//        // 예약 정보를 표시할 TextView 찾아서 텍스트 설정
-//        val bkInfo1 = findViewById<TextView>(R.id.bkInfo1)
-//        bkInfo1.text = "\n $selectedDate\n $timePeriod $selectedTime"
-//        // 예약 정보가 있는지 확인하고 UI 업데이트
-//        updateReservationUI(selectedDate, selectedTime)
-
+        val trainerName = intent.getStringExtra("trainerName")
+        val selectedTimeArray= intent.getStringArrayExtra("selectedTimes")
+        val selectedDate = intent.getStringExtra("selectedDate")
         val search_ic = findViewById<ImageView>(R.id.search_ic)
         val happy_ic = findViewById<ImageView>(R.id.happy_ic)
         val profile_ic = findViewById<ImageView>(R.id.profile_ic)
 
-        // 하단 바 클릭 시
+         //오전과 오후를 구분하여 표시할 변수
+        val timePeriod: String = when {
+            selectedTimeArray?.getOrNull(0)?.contains("am", ignoreCase = true) == true -> "오전"
+            selectedTimeArray?.getOrNull(0)?.contains("pm", ignoreCase = true) == true -> "오후"
+            else -> "" // 오전/오후가 아닌 경우
+        }
 
+        // 예약 정보를 표시할 TextView 찾아서 텍스트 설정
+        val bkInfo1 = findViewById<TextView>(R.id.bkInfo1)
+        val textToShow = "$trainerName 트레이너\n $selectedDate\n $timePeriod ${selectedTimeArray?.joinToString(", ")}"
+        Log.d("MainActivity", "Text to show: $textToShow")
+        bkInfo1.text = textToShow
+        updateReservationUI(selectedDate, selectedTimeArray ?: emptyArray())
+
+        // 하단 바 클릭 시
         search_ic.setOnClickListener {
             // 효과 (아이콘 축소)
             it.animate().scaleX(0.8f).scaleY(0.8f).setDuration(100).withEndAction {
@@ -88,31 +86,24 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == RESULT_CODE_BOOKING && resultCode == RESULT_OK) {
-            // Booking 액티비티에서 전달받은 예약 정보
-            val trainerName = data?.getStringExtra("trainerName")
-            val selectedTimeArray: Array<String?>? = data?.getStringArrayExtra("selectedTimes")
-            val selectedDate = data?.getStringExtra("selectedDate")
-
-            // 오전과 오후를 구분하여 표시할 변수
-            val timePeriod: String = when {
-                selectedTimeArray?.getOrNull(0)?.contains("am", ignoreCase = true) == true -> "오전"
-                selectedTimeArray?.getOrNull(0)?.contains("pm", ignoreCase = true) == true -> "오후"
-                else -> "" // 오전/오후가 아닌 경우
-            }
-            // 로그 추가
-            Log.d("BookingActivity", "Trainer Name: $trainerName")
-            Log.d("BookingActivity", "Selected Time Array: ${selectedTimeArray?.contentToString()}")
-            Log.d("BookingActivity", "Selected Date: $selectedDate")
-
-
-
-            // 예약 정보를 표시할 TextView 찾아서 텍스트 설정
-            val bkInfo1 = findViewById<TextView>(R.id.bkInfo1)
-            bkInfo1.text = "\n $selectedDate\n $timePeriod ${selectedTimeArray?.joinToString(", ")}"
-            updateReservationUI(selectedDate, selectedTimeArray ?: emptyArray())
-        }
-    }
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//        if (requestCode == RESULT_CODE_BOOKING && resultCode == RESULT_OK) {
+//            // Booking 액티비티에서 전달받은 예약 정보
+//            val trainerName = intent.getStringExtra("trainerName")
+//            val selectedTimeArray: Array<String?>? = intent.getStringArrayExtra("selectedTimes")
+//            val selectedDate = intent.getStringExtra("selectedDate")
+//
+//            // 오전과 오후를 구분하여 표시할 변수
+//            val timePeriod: String = when {
+//                selectedTimeArray?.getOrNull(0)?.contains("am", ignoreCase = true) == true -> "오전"
+//                selectedTimeArray?.getOrNull(0)?.contains("pm", ignoreCase = true) == true -> "오후"
+//                else -> "" // 오전/오후가 아닌 경우
+//            }
+//            // 예약 정보를 표시할 TextView 찾아서 텍스트 설정
+//            val bkInfo1 = findViewById<TextView>(R.id.bkInfo1)
+//            bkInfo1.text = "$trainerName 트레이너\n $selectedDate\n $timePeriod ${selectedTimeArray?.joinToString(", ")}"
+//            updateReservationUI(selectedDate, selectedTimeArray ?: emptyArray())
+//        }
+//    }
 }

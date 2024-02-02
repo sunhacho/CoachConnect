@@ -37,10 +37,7 @@ class TrainerInfo : AppCompatActivity() {
         val trainerLocation = intent.getStringExtra("trainerLocation")
         val trainerEducation = intent.getStringExtra("trainerEducation")
         val trainerQualification = intent.getStringExtra("trainerQualification")
-        Log.d("TrainerInfo", "Trainer Name: $trainerName")
-        Log.d("TrainerInfo", "Trainer Location: $trainerLocation")
-        Log.d("TrainerInfo", "Trainer Education: $trainerEducation")
-        Log.d("TrainerInfo", "Trainer Qualification: $trainerQualification")
+
         trName.text = trainerName
         hashtag.text = trainerHashtag
         location.text = "📍 "+trainerLocation

@@ -23,21 +23,21 @@ class Booking : AppCompatActivity() {
     private var clickedTime: String = ""
 
     // 선택된 시간을 저장하는 리스트
-    private val selectedTimes: MutableList<String> = mutableListOf()
+    private val selectedTimeArray: MutableList<String> = mutableListOf()
 
     // 각 버튼 클릭 시 호출되는 함수
     private fun onTimeButtonClick(button: Button) {
         // 선택된 버튼의 텍스트(시간)를 가져와서 저장
         clickedTime = button.text.toString()
         // 이미 선택된 시간인지 확인
-        if (selectedTimes.contains(clickedTime)) {
+        if (selectedTimeArray.contains(clickedTime)) {
             // 이미 선택된 경우, 선택을 해제하고 스타일을 원래대로 변경
-            selectedTimes.remove(clickedTime)
+            selectedTimeArray.remove(clickedTime)
             setButtonStyle(button, defaultStyle)
         } else {
             // 선택되지 않은 경우, 최대 두 개까지만 선택 가능
-            if (selectedTimes.size < 2) {
-                selectedTimes.add(clickedTime)
+            if (selectedTimeArray.size < 2) {
+                selectedTimeArray.add(clickedTime)
                 setButtonStyle(button, clickedStyle)
             } else {
                 showToast("최대 두 개의 시간만 선택 가능합니다.")
@@ -87,8 +87,9 @@ class Booking : AppCompatActivity() {
         val trName2 = findViewById<TextView>(R.id.trName2)
 
         val trainerName = intent.getStringExtra("trainerName")
-        val trainerName1 = trainerName?.substring(0,3)
-        trName2.text = trainerName1
+        val trainerLocation = intent.getStringExtra("trainerLocation")
+
+        trName2.text = trainerName
 
         val btn9am = findViewById<Button>(R.id.btn9am)
         val btn10am = findViewById<Button>(R.id.btn10am)
@@ -146,20 +147,6 @@ class Booking : AppCompatActivity() {
 
         // 예약하기 버튼에 클릭 리스너 등록
         btnBook2.setOnClickListener {
-            // 선택된 정보를 메인 화면으로 전달
-            intent.putExtra("trainerName", trainerName)
-            intent.putExtra("selectedTimes", selectedTimes.toTypedArray())
-            intent.putExtra("selectedDate", dateLine.text.toString())
-
-            // 오전/오후 정보를 전달
-            for (time in selectedTimes) {
-                val buttonId = resources.getIdentifier("btn${time.replace(":", "").toLowerCase()}", "id", packageName)
-                val amPm = getAmPmFromButtonId(buttonId)
-                intent.putExtra("amPm_$time", amPm)
-            }
-
-            setResult(RESULT_OK, intent) // 이 부분을 추가해야 합니다.
-            finish() // 이 부분을 추가해야 합니다.
 
             // 토스트 메시지 표시
             showToast("예약이 완료되었습니다.")
@@ -167,6 +154,19 @@ class Booking : AppCompatActivity() {
             // MainActivity로 돌아가기
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
+
+            // 선택된 정보를 메인 화면으로 전달
+            intent.putExtra("trainerName", trainerName)
+            intent.putExtra("selectedTimes", selectedTimeArray.toTypedArray())
+            intent.putExtra("selectedDate", dateLine.text.toString())
+            intent.putExtra("trainerLocation", trainerLocation)
+
+            // 오전/오후 정보를 전달
+            for (time in selectedTimeArray) {
+                val buttonId = resources.getIdentifier("btn${time.replace(":", "").toLowerCase()}", "id", packageName)
+                val amPm = getAmPmFromButtonId(buttonId)
+                intent.putExtra("amPm_$time", amPm)
+            }
         }
 
         // 하단 바 클릭 시
