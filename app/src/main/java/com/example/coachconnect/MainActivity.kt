@@ -3,6 +3,7 @@ package com.example.coachconnect
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -15,23 +16,23 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // SharedPreferences에서 예약 정보 불러오기
-        val sharedPreferences = getSharedPreferences("booking_info", MODE_PRIVATE)
-        val selectedDate = sharedPreferences.getString("selectedDate", "")
-        val selectedTime = sharedPreferences.getString("selectedTime", "")
-
-        // 오전과 오후를 구분하여 표시할 변수
-        val timePeriod: String = when {
-            selectedTime?.contains("am", ignoreCase = true) == true -> "오전"
-            selectedTime?.contains("pm", ignoreCase = true) == true -> "오후"
-            else -> "" // 오전/오후가 아닌 경우
-        }
-
-        // 예약 정보를 표시할 TextView 찾아서 텍스트 설정
-        val bkInfo1 = findViewById<TextView>(R.id.bkInfo1)
-        bkInfo1.text = "\n $selectedDate\n $timePeriod $selectedTime"
-        // 예약 정보가 있는지 확인하고 UI 업데이트
-        updateReservationUI(selectedDate, selectedTime)
+//        // SharedPreferences에서 예약 정보 불러오기
+//        val sharedPreferences = getSharedPreferences("booking_info", MODE_PRIVATE)
+//        val selectedDate = sharedPreferences.getString("selectedDate", "")
+//        val selectedTime = sharedPreferences.getString("selectedTime", "")
+//
+//        // 오전과 오후를 구분하여 표시할 변수
+//        val timePeriod: String = when {
+//            selectedTime?.contains("am", ignoreCase = true) == true -> "오전"
+//            selectedTime?.contains("pm", ignoreCase = true) == true -> "오후"
+//            else -> "" // 오전/오후가 아닌 경우
+//        }
+//
+//        // 예약 정보를 표시할 TextView 찾아서 텍스트 설정
+//        val bkInfo1 = findViewById<TextView>(R.id.bkInfo1)
+//        bkInfo1.text = "\n $selectedDate\n $timePeriod $selectedTime"
+//        // 예약 정보가 있는지 확인하고 UI 업데이트
+//        updateReservationUI(selectedDate, selectedTime)
 
         val search_ic = findViewById<ImageView>(R.id.search_ic)
         val happy_ic = findViewById<ImageView>(R.id.happy_ic)
@@ -69,12 +70,12 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun updateReservationUI(selectedDate: String?, selectedTime: String?) {
+    private fun updateReservationUI(selectedDate: String?, selectedTimeArray: Array<String?>) {
         val bkInfo1 = findViewById<TextView>(R.id.bkInfo1)
         val boxIc = findViewById<ImageView>(R.id.box_ic)
         val boxIc2 = findViewById<ImageView>(R.id.box_ic2)
 
-        if (selectedDate.isNullOrBlank() || selectedTime.isNullOrBlank()) {
+        if (selectedDate.isNullOrBlank() || selectedTimeArray.isNullOrEmpty()) {
             // 예약 정보가 없는 경우
             bkInfo1.visibility = View.GONE
             boxIc.visibility = View.VISIBLE
@@ -92,11 +93,26 @@ class MainActivity : AppCompatActivity() {
         if (requestCode == RESULT_CODE_BOOKING && resultCode == RESULT_OK) {
             // Booking 액티비티에서 전달받은 예약 정보
             val trainerName = data?.getStringExtra("trainerName")
-            val selectedTimes = data?.getStringArrayExtra("selectedTimes")
+            val selectedTimeArray: Array<String?>? = data?.getStringArrayExtra("selectedTimes")
             val selectedDate = data?.getStringExtra("selectedDate")
+
+            // 오전과 오후를 구분하여 표시할 변수
+            val timePeriod: String = when {
+                selectedTimeArray?.getOrNull(0)?.contains("am", ignoreCase = true) == true -> "오전"
+                selectedTimeArray?.getOrNull(0)?.contains("pm", ignoreCase = true) == true -> "오후"
+                else -> "" // 오전/오후가 아닌 경우
+            }
+            // 로그 추가
+            Log.d("BookingActivity", "Trainer Name: $trainerName")
+            Log.d("BookingActivity", "Selected Time Array: ${selectedTimeArray?.contentToString()}")
+            Log.d("BookingActivity", "Selected Date: $selectedDate")
+
+
 
             // 예약 정보를 표시할 TextView 찾아서 텍스트 설정
             val bkInfo1 = findViewById<TextView>(R.id.bkInfo1)
+            bkInfo1.text = "\n $selectedDate\n $timePeriod ${selectedTimeArray?.joinToString(", ")}"
+            updateReservationUI(selectedDate, selectedTimeArray ?: emptyArray())
         }
     }
 }

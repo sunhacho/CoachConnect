@@ -63,8 +63,6 @@ class Booking : AppCompatActivity() {
     }
 
 
-
-
     companion object {
         const val DIALOG_DATE = 1
     }
@@ -78,12 +76,10 @@ class Booking : AppCompatActivity() {
     private val clickedStyle by lazy {
         getDrawable(R.drawable.rounded_btn2) as GradientDrawable
     }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.booking)
 
-        val back2 = findViewById<ImageButton>(R.id.back2)
         val home_ic3 = findViewById<ImageView>(R.id.home_ic3)
         val search_ic3 = findViewById<ImageView>(R.id.search_ic3)
         val happy_ic3 = findViewById<ImageView>(R.id.happy_ic3)
@@ -170,13 +166,6 @@ class Booking : AppCompatActivity() {
 
             // MainActivity로 돌아가기
             val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-        }
-
-        // back 버튼 클릭 시
-        back2.setOnClickListener {
-            // 트레이너 목록 액티비티로 이동
-            val intent = Intent(this, TrainerInfo::class.java)
             startActivity(intent)
         }
 

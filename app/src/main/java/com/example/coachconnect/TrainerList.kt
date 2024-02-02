@@ -13,6 +13,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ListView
 import android.widget.TextView
+import kotlin.math.min
 
 
 class TrainerList : AppCompatActivity() {
@@ -149,7 +150,7 @@ class TrainerList : AppCompatActivity() {
             val clickedItemData = dataList[position]
             val intent = Intent(this, TrainerInfo::class.java)
             // 각 데이터를 개별적으로 가져오기
-            val trainerName = clickedItemData.substringBefore("\n")
+            val trainerName = clickedItemData.substringBefore(" 트")
             val trainerHashtag = clickedItemData.substringAfter("\n").substringBefore("\n")
             val trainerLocation = clickedItemData.substringAfterLast("📍")
 
@@ -222,6 +223,7 @@ class TrainerList : AppCompatActivity() {
 
         while (cursor.moveToNext()) {
             val trainerName = cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.KEY_NAME))
+                ?.substring(0, 3)
             val trainerHashtag =
                 cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.KEY_HASHTAG))
             val trainerLocation =

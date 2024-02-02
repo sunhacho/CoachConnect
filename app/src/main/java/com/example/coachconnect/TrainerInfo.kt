@@ -33,7 +33,6 @@ class TrainerInfo : AppCompatActivity() {
         val qualification = findViewById<TextView>(R.id.quali)
 
         val trainerName = intent.getStringExtra("trainerName")
-        val trainerName1 = trainerName?.substring(0,3)
         val trainerHashtag = intent.getStringExtra("trainerHashtag")
         val trainerLocation = intent.getStringExtra("trainerLocation")
         val trainerEducation = intent.getStringExtra("trainerEducation")
@@ -42,9 +41,9 @@ class TrainerInfo : AppCompatActivity() {
         Log.d("TrainerInfo", "Trainer Location: $trainerLocation")
         Log.d("TrainerInfo", "Trainer Education: $trainerEducation")
         Log.d("TrainerInfo", "Trainer Qualification: $trainerQualification")
-        trName.text = trainerName1
+        trName.text = trainerName
         hashtag.text = trainerHashtag
-        location.text = trainerLocation
+        location.text = "📍 "+trainerLocation
         education.text = trainerEducation
         qualification.text = trainerQualification
 
