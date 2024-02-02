@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.Toast
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.util.Log
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -151,22 +152,22 @@ class Booking : AppCompatActivity() {
             // 토스트 메시지 표시
             showToast("예약이 완료되었습니다.")
 
-            // MainActivity로 돌아가기
+            /// 예약 정보를 MainActivity로 전달하기 위한 Intent를 생성
             val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            intent.putExtra("trainerName", trainerName)  // 트레이너 이름 전달
+            intent.putExtra("selectedTimes", selectedTimeArray.toTypedArray())  // 선택된 시간 배열 전달
+            intent.putExtra("selectedDate", dateLine.text.toString())  // 선택된 날짜 전달
+            intent.putExtra("trainerLocation", trainerLocation)  // 트레이너 위치 전달
 
-            // 선택된 정보를 메인 화면으로 전달
-            intent.putExtra("trainerName", trainerName)
-            intent.putExtra("selectedTimes", selectedTimeArray.toTypedArray())
-            intent.putExtra("selectedDate", dateLine.text.toString())
-            intent.putExtra("trainerLocation", trainerLocation)
-
-            // 오전/오후 정보를 전달
+            // 선택된 시간에 대한 오전/오후 정보를 전달
             for (time in selectedTimeArray) {
                 val buttonId = resources.getIdentifier("btn${time.replace(":", "").toLowerCase()}", "id", packageName)
                 val amPm = getAmPmFromButtonId(buttonId)
                 intent.putExtra("amPm_$time", amPm)
             }
+
+            // MainActivity로 이동
+            startActivity(intent)
         }
 
         // 하단 바 클릭 시
@@ -174,8 +175,8 @@ class Booking : AppCompatActivity() {
         home_ic3.setOnClickListener {
             // 효과 (아이콘 축소)
             it.animate().scaleX(0.8f).scaleY(0.8f).setDuration(100).withEndAction {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
                 // 효과 제거 (아이콘 확대)
                 it.animate().scaleX(1f).scaleY(1f).setDuration(100).start()
             }.start()
@@ -192,8 +193,8 @@ class Booking : AppCompatActivity() {
         happy_ic3.setOnClickListener {
             // 효과 (아이콘 축소)
             it.animate().scaleX(0.8f).scaleY(0.8f).setDuration(100).withEndAction {
-            val intent = Intent(this, GoalsettingActivity::class.java)
-            startActivity(intent)
+                val intent = Intent(this, GoalsettingActivity::class.java)
+                startActivity(intent)
                 // 효과 제거 (아이콘 확대)
                 it.animate().scaleX(1f).scaleY(1f).setDuration(100).start()
             }.start()
@@ -201,11 +202,11 @@ class Booking : AppCompatActivity() {
         profile_ic3.setOnClickListener {
             // 효과 (아이콘 축소)
             it.animate().scaleX(0.8f).scaleY(0.8f).setDuration(100).withEndAction {
-            val intent = Intent(this, ProfileActivity::class.java)
-            startActivity(intent)
-            // 효과 제거 (아이콘 확대)
-            it.animate().scaleX(1f).scaleY(1f).setDuration(100).start()
-        }.start()
+                val intent = Intent(this, ProfileActivity::class.java)
+                startActivity(intent)
+                // 효과 제거 (아이콘 확대)
+                it.animate().scaleX(1f).scaleY(1f).setDuration(100).start()
+            }.start()
         }
     }
 

@@ -23,6 +23,18 @@ class TrainerList : AppCompatActivity() {
     val dataList: ArrayList<String> = ArrayList()
     lateinit var adapter: ArrayAdapter<String>
 
+    // 예약 정보를 설정하고 현재 액티비티를 종료하는 메서드
+    private fun setReservationAndFinish(trainerName: String, selectedTimes: Array<String?>, selectedDate: String) {
+        val resultIntent = Intent()
+        resultIntent.putExtra("trainerName", trainerName)
+        resultIntent.putExtra("selectedTimes", selectedTimes)
+        resultIntent.putExtra("selectedDate", selectedDate)
+
+        setResult(RESULT_OK, resultIntent)
+        finish()
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.trainer_list)
