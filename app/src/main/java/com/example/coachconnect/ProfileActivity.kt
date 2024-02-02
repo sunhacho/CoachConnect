@@ -33,6 +33,7 @@ class ProfileActivity : AppCompatActivity() {
         val nameDate = intent.getStringExtra("nameDate")
         val birthdayDate = intent.getStringExtra("birthdayDate")
         val heightData = intent.getStringExtra("heightData")
+        val nowWeightData = intent.getStringExtra("nowWeightData")
         val targetWeightData = intent.getStringExtra("targetWeightData")
 
         // 값이 null이 아니면 EditText에 표시
@@ -47,6 +48,9 @@ class ProfileActivity : AppCompatActivity() {
         }
         heightData?.let {
             binding.heightData.setText(it)
+        }
+        nowWeightData?.let {
+            binding.nowWeightData.setText(it)
         }
         targetWeightData?.let {
             binding.targetWeightData.setText(it)
@@ -76,8 +80,12 @@ class ProfileActivity : AppCompatActivity() {
         val storedHeightData = sharedPreferences.getString("heightData", "")
         binding.heightData.setText(storedHeightData)
 
+        val storedNowWeightData = sharedPreferences.getString("nowWeightData", "")
+        binding.nowWeightData.setText(storedNowWeightData)
+
         val storedTargetWeightData = sharedPreferences.getString("targetWeightData", "")
         binding.targetWeightData.setText(storedTargetWeightData)
+
 
 
         val home_ic = findViewById<ImageView>(R.id.home_ic)
@@ -126,7 +134,6 @@ class ProfileActivity : AppCompatActivity() {
             }
         }
 
-        //생일 데이터
         binding.imageButton1.setOnClickListener(object: View.OnClickListener{
             override fun onClick(v: View?) {
                 binding.imageButton1.isSelected = true
@@ -140,6 +147,7 @@ class ProfileActivity : AppCompatActivity() {
                 binding.imageButton1.isSelected = false
             }
         })
+        //생일 데이터
         binding.birthdayDate.setOnClickListener{
             val cal = Calendar.getInstance()
             val data = DatePickerDialog.OnDateSetListener { view, year, month, day ->
@@ -159,7 +167,17 @@ class ProfileActivity : AppCompatActivity() {
             editor.putString("nameDate", binding.nameDate.text.toString())
             editor.putString("birthdayDate", binding.birthdayDate.text.toString())
             editor.putString("heightData", binding.heightData.text.toString())
+            editor.putString("nowWeightData", binding.nowWeightData.text.toString())
             editor.putString("targetWeightData", binding.targetWeightData.text.toString())
+
+            // 기존 "CM"/"KG" 제거 후 "CM"/"KG"를 붙여서 저장
+            val newHeight = binding.heightData.text.toString().replace("CM", "") + "CM"
+            editor.putString("heightData", newHeight)
+            val newNowWeight = binding.nowWeightData.text.toString().replace("KG", "") + "KG"
+            editor.putString("nowWeightData", newNowWeight)
+            val newTargetWeight = binding.targetWeightData.text.toString().replace("KG", "") + "KG"
+            editor.putString("targetWeightData", newTargetWeight)
+
 
             editor.apply()
             // 저장 완료 메시지
