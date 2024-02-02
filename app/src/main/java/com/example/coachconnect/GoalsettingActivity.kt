@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
+import android.widget.CheckBox
 import androidx.appcompat.app.AppCompatActivity
 import com.example.coachconnect.databinding.GoalsettingBinding
 
@@ -13,6 +14,14 @@ class GoalsettingActivity : AppCompatActivity() {
 
     private lateinit var binding: GoalsettingBinding
     private val sharedPreferencesKey = "profile_data"
+
+    // 각 그룹당 선택된 체크박스 ID를 저장할 변수
+    private var selectedCheckBoxGroup1: Int? = null
+    private var selectedCheckBoxGroup2: Int? = null
+
+    // 각 그룹의 중복 체크 여부를 확인할 변수
+    private var isCheckBoxGroup1Selected = false
+    private var isCheckBoxGroup2Selected = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +61,38 @@ class GoalsettingActivity : AppCompatActivity() {
         binding.checkBox35.isChecked = sharedPreferences.getBoolean("checkBox35Selected", false)
         binding.checkBox36.isChecked = sharedPreferences.getBoolean("checkBox36Selected", false)
         binding.checkBox37.isChecked = sharedPreferences.getBoolean("checkBox37Selected", false)
+
+        // 각 체크박스에 대한 리스너 설정
+        binding.checkBox21.setOnCheckedChangeListener { _, isChecked ->
+            handleCheckBoxChange(isChecked, binding.checkBox21, 1)
+        }
+        binding.checkBox22.setOnCheckedChangeListener { _, isChecked ->
+            handleCheckBoxChange(isChecked, binding.checkBox22, 1)
+        }
+        binding.checkBox23.setOnCheckedChangeListener { _, isChecked ->
+            handleCheckBoxChange(isChecked, binding.checkBox23, 1)
+        }
+        binding.checkBox31.setOnCheckedChangeListener { _, isChecked ->
+            handleCheckBoxChange(isChecked, binding.checkBox31, 2)
+        }
+        binding.checkBox32.setOnCheckedChangeListener { _, isChecked ->
+            handleCheckBoxChange(isChecked, binding.checkBox32, 2)
+        }
+        binding.checkBox33.setOnCheckedChangeListener { _, isChecked ->
+            handleCheckBoxChange(isChecked, binding.checkBox33, 2)
+        }
+        binding.checkBox34.setOnCheckedChangeListener { _, isChecked ->
+            handleCheckBoxChange(isChecked, binding.checkBox34, 2)
+        }
+        binding.checkBox35.setOnCheckedChangeListener { _, isChecked ->
+            handleCheckBoxChange(isChecked, binding.checkBox35, 2)
+        }
+        binding.checkBox36.setOnCheckedChangeListener { _, isChecked ->
+            handleCheckBoxChange(isChecked, binding.checkBox36, 2)
+        }
+        binding.checkBox37.setOnCheckedChangeListener { _, isChecked ->
+            handleCheckBoxChange(isChecked, binding.checkBox37, 2)
+        }
 
         val home = findViewById<ImageView>(R.id.home_ic)
         val search_ic = findViewById<ImageView>(R.id.search_ic)
@@ -98,7 +139,7 @@ class GoalsettingActivity : AppCompatActivity() {
 
         // "확인" 버튼 클릭 이벤트 처리
         findViewById<Button>(R.id.button3)?.setOnClickListener {
-            //SharedPreferences에 저장
+            // SharedPreferences에 저장
             val editor = sharedPreferences.edit()
             editor.putBoolean("checkBox1Selected", binding.checkBox1.isChecked)
             editor.putBoolean("checkBox2Selected", binding.checkBox2.isChecked)
@@ -118,6 +159,53 @@ class GoalsettingActivity : AppCompatActivity() {
             editor.apply()
 
             Toast.makeText(this, "목표 설정 완료", Toast.LENGTH_SHORT).show()
+
+        }
+    }
+
+    // 체크박스의 상태가 변경될 때 호출되는 함수
+    private fun handleCheckBoxChange(
+        isChecked: Boolean,
+        checkBox: CheckBox,
+        group: Int
+    ) {
+        if (isChecked) {
+            // 이미 선택된 경우 체크를 해제하고 메시지 표시
+            if (group == 1 && selectedCheckBoxGroup1 != null) {
+                checkBox.isChecked = false
+                Toast.makeText(this, "이미 선택된 목표가 있습니다.", Toast.LENGTH_SHORT).show()
+            } else if (group == 2 && selectedCheckBoxGroup2 != null) {
+                checkBox.isChecked = false
+                Toast.makeText(this, "이미 선택된 목표가 있습니다.", Toast.LENGTH_SHORT).show()
+            } else {
+                // 그룹에 따라 선택된 체크박스 ID 설정
+                if (group == 1) {
+                    selectedCheckBoxGroup1 = checkBox.id
+                } else if (group == 2) {
+                    selectedCheckBoxGroup2 = checkBox.id
+                }
+
+                // 그룹에 따라 중복 체크 여부 설정
+                if (group == 1) {
+                    isCheckBoxGroup1Selected = true
+                } else if (group == 2) {
+                    isCheckBoxGroup2Selected = true
+                }
+            }
+        } else {
+            // 체크 해제된 경우 선택된 체크박스 ID 초기화
+            if (group == 1) {
+                selectedCheckBoxGroup1 = null
+            } else if (group == 2) {
+                selectedCheckBoxGroup2 = null
+            }
+
+            // 그룹에 따라 중복 체크 여부 설정
+            if (group == 1) {
+                isCheckBoxGroup1Selected = false
+            } else if (group == 2) {
+                isCheckBoxGroup2Selected = false
+            }
         }
     }
 }
