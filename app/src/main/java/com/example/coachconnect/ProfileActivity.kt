@@ -19,6 +19,8 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var binding: ProfileBinding
     private val sharedPreferencesKey = "profile_data"
 
+    private var selectedBirthday: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         //val binding = ActivityMainBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
@@ -134,28 +136,46 @@ class ProfileActivity : AppCompatActivity() {
             }
         }
 
-        binding.imageButton1.setOnClickListener(object: View.OnClickListener{
-            override fun onClick(v: View?) {
-                binding.imageButton1.isSelected = true
-                binding.imageButton2.isSelected = false
-            }
-        })
+        binding.imageButton1.setOnClickListener {
+            // 이미지 버튼1이 선택되어 있으면 선택 해제, 아니면 선택
+            binding.imageButton1.isSelected = !binding.imageButton1.isSelected
 
-        binding.imageButton2.setOnClickListener(object: View.OnClickListener{
-            override fun onClick(v: View?) {
-                binding.imageButton2.isSelected = true
-                binding.imageButton1.isSelected = false
-            }
-        })
-        //생일 데이터
-        binding.birthdayDate.setOnClickListener{
-            val cal = Calendar.getInstance()
-            val data = DatePickerDialog.OnDateSetListener { view, year, month, day ->
-                binding.birthdayDate.setText(year.toString() + "/" + (month + 1).toString() + "/" + day.toString())
-
-            }
-            DatePickerDialog(this, data, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show()
+            // 이미지 버튼2는 선택 해제
+            binding.imageButton2.isSelected = false
         }
+
+        binding.imageButton2.setOnClickListener {
+            // 이미지 버튼2가 선택되어 있으면 선택 해제, 아니면 선택
+            binding.imageButton2.isSelected = !binding.imageButton2.isSelected
+
+            // 이미지 버튼1은 선택 해제
+            binding.imageButton1.isSelected = false
+        }
+
+        //생일 데이터
+        binding.birthdayDate.setOnClickListener {
+            val cal = Calendar.getInstance()
+            val currentYear = cal.get(Calendar.YEAR)
+            val currentMonth = cal.get(Calendar.MONTH)
+            val currentDay = cal.get(Calendar.DAY_OF_MONTH)
+
+            val data = DatePickerDialog.OnDateSetListener { _, year, month, day ->
+                val newDate = "$year/${month + 1}/$day"
+                if (newDate != selectedBirthday) {
+                    binding.birthdayDate.setText(newDate)
+                    selectedBirthday = newDate
+                } else {
+                    // 동일한 날짜를 선택하면 삭제
+                    binding.birthdayDate.setText("")
+                    selectedBirthday = null
+                }
+            }
+
+            DatePickerDialog(
+                this, data, currentYear, currentMonth, currentDay
+            ).show()
+        }
+
 
         // "확인" 버튼 클릭 이벤트 처리
         findViewById<Button>(R.id.button3)?.setOnClickListener {
@@ -166,17 +186,22 @@ class ProfileActivity : AppCompatActivity() {
             editor.putBoolean("imageButton2Selected", binding.imageButton2.isSelected)
             editor.putString("nameDate", binding.nameDate.text.toString())
             editor.putString("birthdayDate", binding.birthdayDate.text.toString())
-            editor.putString("heightData", binding.heightData.text.toString())
-            editor.putString("nowWeightData", binding.nowWeightData.text.toString())
-            editor.putString("targetWeightData", binding.targetWeightData.text.toString())
 
-            // 기존 "CM"/"KG" 제거 후 "CM"/"KG"를 붙여서 저장
-            val newHeight = binding.heightData.text.toString().replace("CM", "") + "CM"
-            editor.putString("heightData", newHeight)
-            val newNowWeight = binding.nowWeightData.text.toString().replace("KG", "") + "KG"
-            editor.putString("nowWeightData", newNowWeight)
-            val newTargetWeight = binding.targetWeightData.text.toString().replace("KG", "") + "KG"
-            editor.putString("targetWeightData", newTargetWeight)
+            // 입력값이 있는 경우에만 "CM" 또는 "KG" 추가
+            binding.heightData.text.toString().takeIf { it.isNotBlank() }?.let {
+                val newHeight = it.replace("CM", "") + "CM"
+                editor.putString("heightData", newHeight)
+            } ?: editor.remove("heightData") // 입력값이 없으면 해당 키 제거
+
+            binding.nowWeightData.text.toString().takeIf { it.isNotBlank() }?.let {
+                val newNowWeight = it.replace("KG", "") + "KG"
+                editor.putString("nowWeightData", newNowWeight)
+            } ?: editor.remove("nowWeightData") // 입력값이 없으면 해당 키 제거
+
+            binding.targetWeightData.text.toString().takeIf { it.isNotBlank() }?.let {
+                val newTargetWeight = it.replace("KG", "") + "KG"
+                editor.putString("targetWeightData", newTargetWeight)
+            } ?: editor.remove("targetWeightData") // 입력값이 없으면 해당 키 제거
 
 
             editor.apply()
