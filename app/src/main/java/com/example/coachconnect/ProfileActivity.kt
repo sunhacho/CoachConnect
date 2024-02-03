@@ -22,7 +22,6 @@ class ProfileActivity : AppCompatActivity() {
     private var selectedBirthday: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        //val binding = ActivityMainBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         binding = ProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -207,6 +206,8 @@ class ProfileActivity : AppCompatActivity() {
             editor.apply()
             // 저장 완료 메시지
             Toast.makeText(this, "프로필 정보 저장", Toast.LENGTH_SHORT).show()
+            // 사용자명이 비어 있을 경우에 대한 메시지 표시 또는 로직 추가
+            Toast.makeText(this, "사용자명을 입력하세요.", Toast.LENGTH_SHORT).show()
         }
     }
 }
