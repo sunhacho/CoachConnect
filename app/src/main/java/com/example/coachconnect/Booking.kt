@@ -26,10 +26,18 @@ class Booking : AppCompatActivity() {
     // 선택된 시간을 저장하는 리스트
     private val selectedTimeArray: MutableList<String> = mutableListOf()
 
+
     // 각 버튼 클릭 시 호출되는 함수
     private fun onTimeButtonClick(button: Button) {
         // 선택된 버튼의 텍스트(시간)를 가져와서 저장
         clickedTime = button.text.toString()
+        val btnIdName = resources.getResourceEntryName(button.id)
+        val amPm = getAmPmFromButtonId(btnIdName)
+        intent.putExtra("amPm", amPm)
+
+        Log.d("ButtonIdDebug", "Button ID: $btnIdName")
+        Log.d("ButtonIdDebug", "amPm: $amPm")
+
         // 이미 선택된 시간인지 확인
         if (selectedTimeArray.contains(clickedTime)) {
             // 이미 선택된 경우, 선택을 해제하고 스타일을 원래대로 변경
@@ -44,11 +52,12 @@ class Booking : AppCompatActivity() {
                 showToast("최대 두 개의 시간만 선택 가능합니다.")
             }
         }
+        intent.putExtra("amPmOnTimeButtonClick", amPm)
     }
-    private fun getAmPmFromButtonId(buttonId: Int): String {
+    private fun getAmPmFromButtonId(btnIdName: String): String {
         return when {
-            buttonId.toString().contains("am", ignoreCase = true) -> "오전"
-            buttonId.toString().contains("pm", ignoreCase = true) -> "오후"
+            btnIdName.contains("am", ignoreCase = true) -> "오전"
+            btnIdName.contains("pm", ignoreCase = true) -> "오후"
             else -> ""
         }
     }
@@ -62,7 +71,6 @@ class Booking : AppCompatActivity() {
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
-
 
     companion object {
         const val DIALOG_DATE = 1
@@ -151,6 +159,7 @@ class Booking : AppCompatActivity() {
 
             // 토스트 메시지 표시
             showToast("예약이 완료되었습니다.")
+            val amPm = intent.getStringExtra("amPmOnTimeButtonClick")
 
             /// 예약 정보를 MainActivity로 전달하기 위한 Intent를 생성
             val intent = Intent(this, MainActivity::class.java)
@@ -158,13 +167,7 @@ class Booking : AppCompatActivity() {
             intent.putExtra("selectedTimes", selectedTimeArray.toTypedArray())  // 선택된 시간 배열 전달
             intent.putExtra("selectedDate", dateLine.text.toString())  // 선택된 날짜 전달
             intent.putExtra("trainerLocation", trainerLocation)  // 트레이너 위치 전달
-
-            // 선택된 시간에 대한 오전/오후 정보를 전달
-            for (time in selectedTimeArray) {
-                val buttonId = resources.getIdentifier("btn${time.replace(":", "").toLowerCase()}", "id", packageName)
-                val amPm = getAmPmFromButtonId(buttonId)
-                intent.putExtra("amPm_$time", amPm)
-            }
+            intent.putExtra("amPm", amPm)
 
             // MainActivity로 이동
             startActivity(intent)
